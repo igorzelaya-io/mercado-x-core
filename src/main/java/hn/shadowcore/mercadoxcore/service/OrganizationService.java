@@ -8,6 +8,7 @@ import hn.shadowcore.mercadoxlibrary.jpa.predicate.OrgPredicateFactory;
 import hn.shadowcore.mercadoxlibrary.jpa.repository.OrganizationRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.common.errors.ResourceNotFoundException;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -30,6 +31,7 @@ public class OrganizationService {
     private final OrgPredicateFactory orgPredicateFactory;
     private static final QOrganization qOrganization = QOrganization.organization;
 
+    @Cacheable(value = "activeOrgs", key = "#orgId")
     public Organization findActiveOrgById(UUID orgId) {
         return Optional.ofNullable(jpaQueryFactory.selectFrom(qOrganization)
                 .where(orgPredicateFactory.isActive().and(qOrganization.id.eq(orgId)))
@@ -37,6 +39,8 @@ public class OrganizationService {
                 .orElseThrow(() -> new ResourceNotFoundException
                         (String.format("Organization was not found for ID: %s", orgId.toString())));
     }
+
+    @Cacheable(value = "inactiveOrgs", key = "#orgId")
     public Organization findInactiveOrgById(UUID orgId) {
         return Optional.ofNullable(jpaQueryFactory.selectFrom(QOrganization.organization)
                 .where(orgPredicateFactory.isInactive().and(qOrganization.id.eq(orgId)))
@@ -45,6 +49,8 @@ public class OrganizationService {
                         (String.format("Organization was not found for ID: %s", orgId.toString())));
     }
 
+
+    @Cacheable(value = "activeOrgs", key = "#orgName")
     public Organization findByNameContaining(String orgName) {
         return orgRepository.findByNameContainingIgnoreCase(orgName)
                 .orElseThrow(() -> new ResourceNotFoundException

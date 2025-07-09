@@ -1,11 +1,11 @@
 package hn.shadowcore.mercadoxcore.config;
 
-
 import hn.shadowcore.mercadoxoauth.filter.JwtAuthFilter;
 import hn.shadowcore.mercadoxoauth.filter.OrgIdContextFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -16,8 +16,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
-@RequiredArgsConstructor
 @EnableMethodSecurity
+@RequiredArgsConstructor
+@Import({JwtAuthFilter.class, OrgIdContextFilter.class})
 public class MercadoXCoreAuthConfig {
 
     private final JwtAuthFilter jwtAuthFilter;
