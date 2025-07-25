@@ -1,40 +1,34 @@
 package hn.shadowcore.mercadoxcore.service;
 
-import hn.shadowcore.mercadoxlibrary.entity.model.auth.QUser;
 import hn.shadowcore.mercadoxlibrary.entity.model.auth.User;
-import hn.shadowcore.mercadoxlibrary.jpa.predicate.UserPredicateFactory;
-import hn.shadowcore.mercadoxlibrary.jpa.querydsl.OrgAwareQueryFactory;
 import hn.shadowcore.mercadoxlibrary.jpa.repository.UserRepository;
 import org.apache.kafka.common.errors.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.List;
 import java.util.UUID;
 
 @Service
 public class UserService {
 
-    private final OrgAwareQueryFactory orgAwareQueryFactory;
-
-    private final UserPredicateFactory userPredicateFactory;
-
     private final UserRepository userRepository;
 
-    public UserService(OrgAwareQueryFactory orgAwareQueryFactory, UserPredicateFactory userPredicateFactory,
-                       UserRepository userRepository) {
-        this.orgAwareQueryFactory = orgAwareQueryFactory;
-        this.userPredicateFactory = userPredicateFactory;
+    public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
+    public List<User> findAllEnabledOrgAdmins() {
+        return userRepository.findAllEnabledOrgAdmins();
+    }
+
+    public List<User> findAvailableDrivers() {
+        return userRepository.findAvailableDrivers();
+    }
+
     public User findActiveUserByUsername(String username) {
-        return Optional.ofNullable(
-                orgAwareQueryFactory.selectFrom(QUser.user, QUser.user.orgId)
-                        .where(QUser.user.username.eq(username)
-                                .and(userPredicateFactory.isActive()))
-                        .fetchOne()
-        ).orElseThrow(() -> new ResourceNotFoundException
-                (String.format("User not found for username: '%s'", username)));
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new ResourceNotFoundException(String
+                        .format("User not found for username: '%s'", username)));
     }
 
     public User findActiveUserById(String userId) {
@@ -49,6 +43,10 @@ public class UserService {
 
     public boolean existsById(String orgId) {
         return userRepository.existsById(UUID.fromString(orgId));
+    }
+
+    public User saveUser(User user) {
+        return userRepository.save(user);
     }
 
 }

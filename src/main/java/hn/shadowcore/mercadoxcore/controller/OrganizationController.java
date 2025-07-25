@@ -21,7 +21,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/v1/organization")
+@RequestMapping("/api/v1/organizations")
 @RequiredArgsConstructor
 @PreAuthorize("permitAll()")
 public class OrganizationController {

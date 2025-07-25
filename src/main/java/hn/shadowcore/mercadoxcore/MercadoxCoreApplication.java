@@ -11,8 +11,8 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @EnableCaching
 @EnableAsync
 @ComponentScan(basePackages={
-        "hn.shadowcore.mercadoxcontext.config",
-        "hn.shadowcore.mercadoxoauth"})
+        "hn.shadowcore.mercadoxoauth"
+})
 @EntityScan(basePackages = "hn.shadowcore.mercadoxlibrary")
 public class MercadoxCoreApplication {
 

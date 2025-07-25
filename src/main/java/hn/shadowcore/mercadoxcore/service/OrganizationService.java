@@ -22,37 +22,25 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class OrganizationService {
 
-    private final JPAQueryFactory jpaQueryFactory;
-
-    private final OrganizationRepository orgRepository;
+    private final OrganizationRepository organizationRepository;
 
     private final UserService userService;
 
-    private final OrgPredicateFactory orgPredicateFactory;
-    private static final QOrganization qOrganization = QOrganization.organization;
-
     @Cacheable(value = "activeOrgs", key = "#orgId")
     public Organization findActiveOrgById(UUID orgId) {
-        return Optional.ofNullable(jpaQueryFactory.selectFrom(qOrganization)
-                .where(orgPredicateFactory.isActive().and(qOrganization.id.eq(orgId)))
-                .fetchOne())
+        return organizationRepository.findById(orgId)
                 .orElseThrow(() -> new ResourceNotFoundException
-                        (String.format("Organization was not found for ID: %s", orgId.toString())));
+                        (String.format("Organization was not found for ID: %s", orgId)));
     }
 
     @Cacheable(value = "inactiveOrgs", key = "#orgId")
-    public Organization findInactiveOrgById(UUID orgId) {
-        return Optional.ofNullable(jpaQueryFactory.selectFrom(QOrganization.organization)
-                .where(orgPredicateFactory.isInactive().and(qOrganization.id.eq(orgId)))
-                .fetchOne())
-                .orElseThrow(() -> new ResourceNotFoundException
-                        (String.format("Organization was not found for ID: %s", orgId.toString())));
+    public Organization findInactiveOrgById(String orgId) {
+        return organizationRepository.findInactiveOrgById(orgId);
     }
-
 
     @Cacheable(value = "activeOrgs", key = "#orgName")
     public Organization findByNameContaining(String orgName) {
-        return orgRepository.findByNameContainingIgnoreCase(orgName)
+        return organizationRepository.findByNameContainingIgnoreCase(orgName)
                 .orElseThrow(() -> new ResourceNotFoundException
                         (String.format("Org was not found for name: %s", orgName)));
     }
@@ -73,7 +61,7 @@ public class OrganizationService {
 
         creatorId.ifPresent(org::setUserAdminId);
         superUser.ifPresent(user -> org.setOrgUsers(List.of(user)));
-        return orgRepository.save(org);
+        return organizationRepository.save(org);
     }
 
 }
