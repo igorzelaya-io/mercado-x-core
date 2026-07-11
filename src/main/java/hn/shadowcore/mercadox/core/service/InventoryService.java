@@ -1,9 +1,9 @@
 package hn.shadowcore.mercadox.core.service;
 
 
-import hn.shadowcore.mercadoxlibrary.entity.model.core.Inventory;
-import hn.shadowcore.mercadoxlibrary.entity.model.core.Item;
-import hn.shadowcore.mercadoxlibrary.jpa.repository.InventoryRepository;
+import hn.shadowcore.mercadox.library.entity.model.core.Inventory;
+import hn.shadowcore.mercadox.library.entity.model.core.Item;
+import hn.shadowcore.mercadox.library.jpa.repository.InventoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.common.errors.ResourceNotFoundException;
 import org.springframework.stereotype.Service;

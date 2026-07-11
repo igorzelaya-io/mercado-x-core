@@ -1,11 +1,11 @@
 package hn.shadowcore.mercadox.core.service;
 
-import hn.shadowcore.mercadoxcontext.utils.OrgIdContextHolder;
-import hn.shadowcore.mercadoxlibrary.entity.model.auth.Organization;
-import hn.shadowcore.mercadoxlibrary.entity.model.core.Category;
-import hn.shadowcore.mercadoxlibrary.entity.ports.incoming.CategoryUseCase;
-import hn.shadowcore.mercadoxlibrary.jpa.repository.CategoryRepository;
-import hn.shadowcore.mercadoxlibrary.jpa.repository.OrganizationRepository;
+import hn.shadowcore.mercadox.context.utils.OrgIdContextHolder;
+import hn.shadowcore.mercadox.library.entity.model.auth.Organization;
+import hn.shadowcore.mercadox.library.entity.model.core.Category;
+import hn.shadowcore.mercadox.library.entity.ports.incoming.CategoryUseCase;
+import hn.shadowcore.mercadox.library.jpa.repository.CategoryRepository;
+import hn.shadowcore.mercadox.library.jpa.repository.OrganizationRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.common.errors.ResourceNotFoundException;
 import org.springframework.stereotype.Service;

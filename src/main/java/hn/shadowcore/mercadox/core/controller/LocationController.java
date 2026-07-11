@@ -2,9 +2,9 @@ package hn.shadowcore.mercadox.core.controller;
 
 import hn.shadowcore.mercadox.core.mapper.LocationMapper;
 import hn.shadowcore.mercadox.core.service.LocationService;
-import hn.shadowcore.mercadoxlibrary.entity.response.BaseResponseDto;
-import hn.shadowcore.mercadoxlibrary.entity.response.Response;
-import hn.shadowcore.mercadoxlibrary.entity.response.dto.LocationDto;
+import hn.shadowcore.mercadox.library.entity.response.BaseResponseDto;
+import hn.shadowcore.mercadox.library.entity.response.Response;
+import hn.shadowcore.mercadox.library.entity.response.dto.LocationDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

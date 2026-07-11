@@ -1,10 +1,10 @@
 package hn.shadowcore.mercadox.core.publisher;
 
 import hn.shadowcore.mercadox.core.util.EmailDispatchUtils;
-import hn.shadowcore.mercadoxlibrary.entity.model.enums.kafka.KafkaTopic;
-import hn.shadowcore.mercadoxlibrary.entity.model.enums.kafka.publisher.EmailEventPublisher;
-import hn.shadowcore.mercadoxlibrary.entity.response.EventDto;
-import hn.shadowcore.mercadoxlibrary.entity.response.dto.EmailEventDto;
+import hn.shadowcore.mercadox.library.entity.model.enums.kafka.KafkaTopic;
+import hn.shadowcore.mercadox.library.entity.model.enums.kafka.publisher.EmailEventPublisher;
+import hn.shadowcore.mercadox.library.entity.response.EventDto;
+import hn.shadowcore.mercadox.library.entity.response.dto.EmailEventDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

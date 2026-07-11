@@ -1,8 +1,8 @@
 package hn.shadowcore.mercadox.core.service;
 
-import hn.shadowcore.mercadoxlibrary.entity.model.auth.Organization;
-import hn.shadowcore.mercadoxlibrary.entity.model.auth.User;
-import hn.shadowcore.mercadoxlibrary.jpa.repository.OrganizationRepository;
+import hn.shadowcore.mercadox.library.entity.model.auth.Organization;
+import hn.shadowcore.mercadox.library.entity.model.auth.User;
+import hn.shadowcore.mercadox.library.jpa.repository.OrganizationRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.common.errors.ResourceNotFoundException;
 import org.springframework.cache.annotation.Cacheable;

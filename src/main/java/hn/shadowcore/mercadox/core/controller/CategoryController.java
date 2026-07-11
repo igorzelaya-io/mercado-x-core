@@ -1,10 +1,10 @@
 package hn.shadowcore.mercadox.core.controller;
 
 
-import hn.shadowcore.mercadoxlibrary.entity.model.core.Category;
-import hn.shadowcore.mercadoxlibrary.entity.ports.incoming.CategoryUseCase;
-import hn.shadowcore.mercadoxlibrary.entity.response.BaseResponseDto;
-import hn.shadowcore.mercadoxlibrary.entity.response.Response;
+import hn.shadowcore.mercadox.library.entity.model.core.Category;
+import hn.shadowcore.mercadox.library.entity.ports.incoming.CategoryUseCase;
+import hn.shadowcore.mercadox.library.entity.response.BaseResponseDto;
+import hn.shadowcore.mercadox.library.entity.response.Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

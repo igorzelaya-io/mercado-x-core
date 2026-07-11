@@ -1,8 +1,9 @@
 package hn.shadowcore.mercadox.core.controller;
 
-import hn.shadowcore.mercadox.core.MercadoxCoreApplication;
+import hn.shadowcore.mercadox.core.config.MercadoXCoreAuthConfig;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.lang.annotation.ElementType;
@@ -12,8 +13,13 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@SpringBootTest(classes = MercadoxCoreApplication.class)
-@AutoConfigureMockMvc(addFilters = false)
+@Import(MercadoXCoreAuthConfig.class)
+@SpringBootTest(
+        properties = {
+                "spring.autoconfigure.exclude=org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration" +
+                        ",org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration"
+        }
+)
+@AutoConfigureMockMvc
 @ActiveProfiles("test")
-public @interface MercadoXControllerTest {
-}
+public @interface MercadoXControllerTest { }

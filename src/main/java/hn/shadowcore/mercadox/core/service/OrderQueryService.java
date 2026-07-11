@@ -1,9 +1,9 @@
 package hn.shadowcore.mercadox.core.service;
 
-import hn.shadowcore.mercadoxlibrary.entity.model.core.Order;
-import hn.shadowcore.mercadoxlibrary.entity.model.enums.OrderStatus;
-import hn.shadowcore.mercadoxlibrary.entity.ports.incoming.OrderQueryUseCase;
-import hn.shadowcore.mercadoxlibrary.jpa.repository.OrderRepository;
+import hn.shadowcore.mercadox.library.entity.model.core.Order;
+import hn.shadowcore.mercadox.library.entity.model.enums.OrderStatus;
+import hn.shadowcore.mercadox.library.entity.ports.incoming.OrderQueryUseCase;
+import hn.shadowcore.mercadox.library.jpa.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.common.errors.ResourceNotFoundException;
 import org.springframework.cache.annotation.Cacheable;

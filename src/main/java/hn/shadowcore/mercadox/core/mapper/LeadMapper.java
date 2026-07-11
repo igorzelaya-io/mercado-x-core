@@ -1,8 +1,8 @@
 package hn.shadowcore.mercadox.core.mapper;
 
 
-import hn.shadowcore.mercadoxlibrary.entity.model.core.Lead;
-import hn.shadowcore.mercadoxlibrary.entity.model.enums.kafka.event.LeadCreatedEvent;
+import hn.shadowcore.mercadox.library.entity.model.core.Lead;
+import hn.shadowcore.mercadox.library.entity.model.enums.kafka.event.LeadCreatedEvent;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -10,6 +10,7 @@ import org.mapstruct.Mapping;
 public interface LeadMapper {
 
     @Mapping(source = "id", target="eventId")
+    @Mapping(source = "organization.id", target = "orgId")
     LeadCreatedEvent toCreatedEvent(Lead lead);
 
 }

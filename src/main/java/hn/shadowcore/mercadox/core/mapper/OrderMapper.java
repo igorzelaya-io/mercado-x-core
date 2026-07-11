@@ -1,8 +1,8 @@
 package hn.shadowcore.mercadox.core.mapper;
 
-import hn.shadowcore.mercadoxlibrary.entity.model.core.Order;
-import hn.shadowcore.mercadoxlibrary.entity.model.core.OrderItem;
-import hn.shadowcore.mercadoxlibrary.entity.response.dto.OrderDto;
+import hn.shadowcore.mercadox.library.entity.model.core.Order;
+import hn.shadowcore.mercadox.library.entity.model.core.OrderItem;
+import hn.shadowcore.mercadox.library.entity.response.dto.OrderDto;
 import org.springframework.stereotype.Component;
 
 @Component

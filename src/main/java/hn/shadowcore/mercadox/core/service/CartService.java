@@ -1,11 +1,11 @@
 package hn.shadowcore.mercadox.core.service;
 
 import hn.shadowcore.mercadox.core.mapper.ItemMapper;
-import hn.shadowcore.mercadoxlibrary.entity.ports.incoming.CartUseCase;
-import hn.shadowcore.mercadoxlibrary.entity.response.dto.CartDto;
-import hn.shadowcore.mercadoxlibrary.entity.response.dto.ItemDto;
-import hn.shadowcore.mercadoxlibrary.jpa.repository.CartRedisRepository;
-import hn.shadowcore.mercadoxlibrary.jpa.repository.ItemRepository;
+import hn.shadowcore.mercadox.library.entity.ports.incoming.CartUseCase;
+import hn.shadowcore.mercadox.library.entity.response.dto.CartDto;
+import hn.shadowcore.mercadox.library.entity.response.dto.ItemDto;
+import hn.shadowcore.mercadox.library.jpa.repository.ItemRepository;
+import hn.shadowcore.mercadox.library.redis.repository.CartRedisRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.common.errors.ResourceNotFoundException;
 import org.springframework.stereotype.Service;

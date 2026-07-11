@@ -1,14 +1,14 @@
 package hn.shadowcore.mercadox.core.controller;
 
 import hn.shadowcore.mercadox.core.mapper.OrderMapper;
-import hn.shadowcore.mercadoxlibrary.entity.model.enums.OrderStatus;
-import hn.shadowcore.mercadoxlibrary.entity.ports.incoming.OrderQueryUseCase;
-import hn.shadowcore.mercadoxlibrary.entity.ports.incoming.OrderUseCase;
-import hn.shadowcore.mercadoxlibrary.entity.request.DispatchOrderRequest;
-import hn.shadowcore.mercadoxlibrary.entity.request.PlaceOrderRequest;
-import hn.shadowcore.mercadoxlibrary.entity.response.BaseResponseDto;
-import hn.shadowcore.mercadoxlibrary.entity.response.Response;
-import hn.shadowcore.mercadoxlibrary.entity.response.dto.OrderDto;
+import hn.shadowcore.mercadox.library.entity.model.enums.OrderStatus;
+import hn.shadowcore.mercadox.library.entity.ports.incoming.OrderQueryUseCase;
+import hn.shadowcore.mercadox.library.entity.ports.incoming.OrderUseCase;
+import hn.shadowcore.mercadox.library.entity.request.DispatchOrderRequest;
+import hn.shadowcore.mercadox.library.entity.request.PlaceOrderRequest;
+import hn.shadowcore.mercadox.library.entity.response.BaseResponseDto;
+import hn.shadowcore.mercadox.library.entity.response.Response;
+import hn.shadowcore.mercadox.library.entity.response.dto.OrderDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,15 +1,15 @@
 package hn.shadowcore.mercadox.core.util;
 
 import hn.shadowcore.mercadox.core.service.ItemService;
-import hn.shadowcore.mercadoxlibrary.entity.model.core.Item;
-import hn.shadowcore.mercadoxlibrary.entity.model.core.Order;
-import hn.shadowcore.mercadoxlibrary.entity.model.core.OrderItem;
-import hn.shadowcore.mercadoxlibrary.entity.model.core.OrderItemsKey;
-import hn.shadowcore.mercadoxlibrary.entity.model.enums.NotificationTemplateName;
-import hn.shadowcore.mercadoxlibrary.entity.response.dto.EmailEventDto;
-import hn.shadowcore.mercadoxlibrary.entity.response.dto.EmailRecipientDto;
-import hn.shadowcore.mercadoxlibrary.entity.response.dto.ItemDto;
-import hn.shadowcore.mercadoxlibrary.entity.response.dto.OrderDto;
+import hn.shadowcore.mercadox.library.entity.model.core.Item;
+import hn.shadowcore.mercadox.library.entity.model.core.Order;
+import hn.shadowcore.mercadox.library.entity.model.core.OrderItem;
+import hn.shadowcore.mercadox.library.entity.model.core.OrderItemsKey;
+import hn.shadowcore.mercadox.library.entity.model.enums.NotificationTemplateName;
+import hn.shadowcore.mercadox.library.entity.response.dto.EmailEventDto;
+import hn.shadowcore.mercadox.library.entity.response.dto.EmailRecipientDto;
+import hn.shadowcore.mercadox.library.entity.response.dto.ItemDto;
+import hn.shadowcore.mercadox.library.entity.response.dto.OrderDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

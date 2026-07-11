@@ -1,7 +1,7 @@
 package hn.shadowcore.mercadox.core.service;
 
-import hn.shadowcore.mercadoxlibrary.entity.model.auth.User;
-import hn.shadowcore.mercadoxlibrary.jpa.repository.UserRepository;
+import hn.shadowcore.mercadox.library.entity.model.auth.User;
+import hn.shadowcore.mercadox.library.jpa.repository.UserRepository;
 import org.apache.kafka.common.errors.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 

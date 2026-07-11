@@ -1,10 +1,10 @@
 package hn.shadowcore.mercadox.core.service;
 
 import hn.shadowcore.mercadox.core.mapper.LocationMapper;
-import hn.shadowcore.mercadoxlibrary.entity.model.core.Location;
-import hn.shadowcore.mercadoxlibrary.entity.ports.incoming.LocationUseCase;
-import hn.shadowcore.mercadoxlibrary.entity.response.dto.LocationDto;
-import hn.shadowcore.mercadoxlibrary.jpa.repository.LocationRepository;
+import hn.shadowcore.mercadox.library.entity.model.core.Location;
+import hn.shadowcore.mercadox.library.entity.ports.incoming.LocationUseCase;
+import hn.shadowcore.mercadox.library.entity.response.dto.LocationDto;
+import hn.shadowcore.mercadox.library.jpa.repository.LocationRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.common.errors.ResourceNotFoundException;
 import org.springframework.stereotype.Service;

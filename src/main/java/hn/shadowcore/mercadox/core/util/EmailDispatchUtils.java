@@ -2,8 +2,8 @@ package hn.shadowcore.mercadox.core.util;
 
 
 import hn.shadowcore.mercadox.core.service.UserService;
-import hn.shadowcore.mercadoxlibrary.entity.model.auth.User;
-import hn.shadowcore.mercadoxlibrary.entity.response.dto.EmailRecipientDto;
+import hn.shadowcore.mercadox.library.entity.model.auth.User;
+import hn.shadowcore.mercadox.library.entity.response.dto.EmailRecipientDto;
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.kafka.core.KafkaTemplate;

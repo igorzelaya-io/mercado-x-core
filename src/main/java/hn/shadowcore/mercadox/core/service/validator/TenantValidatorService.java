@@ -1,8 +1,9 @@
 package hn.shadowcore.mercadox.core.service.validator;
 
-import hn.shadowcore.mercadoxcontext.validator.AnonymousTenantValidator;
-import hn.shadowcore.mercadoxlibrary.entity.model.auth.Organization;
-import hn.shadowcore.mercadoxlibrary.jpa.repository.OrganizationRepository;
+import hn.shadowcore.mercadox.context.validator.AnonymousTenantValidator;
+import hn.shadowcore.mercadox.library.entity.model.auth.Organization;
+import hn.shadowcore.mercadox.library.jpa.repository.OrganizationRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +19,7 @@ public class TenantValidatorService implements AnonymousTenantValidator {
         return organizationRepository
                 .findById(UUID.fromString(orgId))
                 .map(Organization::getEnabled)
-                .orElseThrow(() -> new RuntimeException("Organization was not found or is not active."));
+                .orElseThrow(() -> new EntityNotFoundException
+                        ("Organization was not found or is not active."));
     }
 }

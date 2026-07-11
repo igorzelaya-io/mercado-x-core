@@ -2,6 +2,9 @@ server:
   port: 8080
 
 spring:
+  sql:
+    init:
+      mode: never
   datasource:
     url: jdbc:postgresql://localhost:5432/mercado_x
     username: postgres

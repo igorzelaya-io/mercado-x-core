@@ -1,8 +1,8 @@
 package hn.shadowcore.mercadox.core.mapper;
 
 
-import hn.shadowcore.mercadoxlibrary.entity.model.auth.User;
-import hn.shadowcore.mercadoxlibrary.entity.response.dto.UserDto;
+import hn.shadowcore.mercadox.library.entity.model.auth.User;
+import hn.shadowcore.mercadox.library.entity.response.dto.UserDto;
 import org.mapstruct.Mapper;
 
 import java.util.List;

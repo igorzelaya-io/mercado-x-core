@@ -1,10 +1,10 @@
 package hn.shadowcore.mercadox.core.publisher;
 
-import hn.shadowcore.mercadoxcontext.utils.KafkaProducerRecordFactory;
-import hn.shadowcore.mercadoxlibrary.entity.model.enums.kafka.KafkaTopic;
-import hn.shadowcore.mercadoxlibrary.entity.model.enums.kafka.event.LeadCreatedEvent;
-import hn.shadowcore.mercadoxlibrary.entity.model.enums.kafka.publisher.LeadEventPublisher;
-import hn.shadowcore.mercadoxlibrary.entity.response.EventDto;
+import hn.shadowcore.mercadox.context.utils.KafkaProducerRecordFactory;
+import hn.shadowcore.mercadox.library.entity.model.enums.kafka.KafkaTopic;
+import hn.shadowcore.mercadox.library.entity.model.enums.kafka.event.LeadCreatedEvent;
+import hn.shadowcore.mercadox.library.entity.model.enums.kafka.publisher.LeadEventPublisher;
+import hn.shadowcore.mercadox.library.entity.response.EventDto;
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.kafka.core.KafkaTemplate;
