@@ -8,7 +8,6 @@ import hn.shadowcore.mercadox.library.entity.model.auth.Organization;
 import hn.shadowcore.mercadox.library.entity.model.core.Lead;
 import hn.shadowcore.mercadox.library.entity.model.enums.kafka.event.LeadCreatedEvent;
 import hn.shadowcore.mercadox.library.entity.request.ClientLeadRequest;
-import hn.shadowcore.mercadox.library.entity.response.EventDto;
 import hn.shadowcore.mercadox.library.jpa.repository.LeadRepository;
 import hn.shadowcore.mercadox.library.jpa.repository.OrganizationRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -25,7 +24,6 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
@@ -79,11 +77,9 @@ class LeadServiceTest {
 
         verify(leadMapper).toCreatedEvent(any(Lead.class));
 
-        ArgumentCaptor<EventDto> eventCaptor = ArgumentCaptor.forClass(EventDto.class);
+        ArgumentCaptor<LeadCreatedEvent> eventCaptor = ArgumentCaptor.forClass(LeadCreatedEvent.class);
         verify(leadEventPublisher).publishLeadCreated(eventCaptor.capture());
         assertNotNull(eventCaptor.getValue().getEventId());
-        assertNotNull(eventCaptor.getValue().getEventPayload());
-        assertTrue(eventCaptor.getValue().getEventPayload() instanceof LeadCreatedEvent);
     }
 
     @Test

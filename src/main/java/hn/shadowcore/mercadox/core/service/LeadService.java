@@ -7,7 +7,6 @@ import hn.shadowcore.mercadox.library.entity.model.core.Lead;
 import hn.shadowcore.mercadox.library.entity.model.enums.kafka.event.LeadCreatedEvent;
 import hn.shadowcore.mercadox.library.entity.ports.incoming.ClientLeadUseCase;
 import hn.shadowcore.mercadox.library.entity.request.ClientLeadRequest;
-import hn.shadowcore.mercadox.library.entity.response.EventDto;
 import hn.shadowcore.mercadox.library.jpa.repository.LeadRepository;
 import hn.shadowcore.mercadox.library.jpa.repository.OrganizationRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -49,11 +48,6 @@ public class LeadService implements ClientLeadUseCase {
 
         LeadCreatedEvent leadEvent = leadMapper.toCreatedEvent(savedLead);
 
-        EventDto<LeadCreatedEvent> kafkaEvent = EventDto.<LeadCreatedEvent>builder()
-                .eventId(leadEvent.getEventId())
-                .eventPayload(leadEvent)
-                .build();
-
-        leadEventPublisher.publishLeadCreated(kafkaEvent);
+        leadEventPublisher.publishLeadCreated(leadEvent);
     }
 }
