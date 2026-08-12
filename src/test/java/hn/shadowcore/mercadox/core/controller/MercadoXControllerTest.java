@@ -1,5 +1,6 @@
 package hn.shadowcore.mercadox.core.controller;
 
+import hn.shadowcore.mercadox.MercadoxCoreApplication;
 import hn.shadowcore.mercadox.core.config.MercadoXCoreAuthConfig;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,6 +16,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Import(MercadoXCoreAuthConfig.class)
 @SpringBootTest(
+        classes = MercadoxCoreApplication.class,
         properties = {
                 "spring.autoconfigure.exclude=org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration" +
                         ",org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration"
