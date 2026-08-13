@@ -21,8 +21,7 @@ spring:
           non_contextual_creation: true
 security:
   jwt:
-    secret: "R3vVjK8kL2sP5xMnTbQ1VuZc8AyR3nFwqLpBh9sZ2JY="
-    expiration: 3600000
+    public-key-location: ${JWT_PUBLIC_KEY_LOCATION:file:./secrets/public.pem}
 
 logging:
   level:

@@ -30,9 +30,11 @@ import org.apache.kafka.common.errors.ResourceNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 
@@ -120,23 +122,26 @@ public class OrderService implements OrderUseCase {
     }
 
     @Override
+    @Transactional
     public OrderStatus dispatch(DispatchOrderRequest request) {
 
         Order order = orderRepository.findById(String.valueOf(request.getOrderId()))
                 .orElseThrow(() -> new ResourceNotFoundException(String
                         .format("Order was not found for ID: '%s'", request.getOrderId())));
 
-        for(OrderItem item : order.getItems()) {
-            if(!isInStock(item.getItem().getId().toString(), item.getQuantity())) {
-                throw new ResourceNotFoundException(String
-                        .format("Item: '%s' was not found for quantity: '%s'",
-                                item.getItem().getName(), item.getQuantity()));
-            }
-            Item itemEntity = itemService.getItemDetails(String.valueOf(item.getItem().getId()));
-            itemEntity.setUnitQuantity(itemEntity.getUnitQuantity() - item.getQuantity());
-            validateAvailability(itemEntity);
-            itemService.updateItem(itemEntity);
-        }
+        order.getItems().stream()
+                .sorted(Comparator.comparing(oi -> oi.getItem().getId()))
+                .forEach(oi -> {
+                    Item itemEntity = itemService.getItemDetailsForUpdate(String.valueOf(oi.getItem().getId()));
+                    if(itemEntity.getUnitQuantity() < oi.getQuantity()) {
+                        throw new ResourceNotFoundException(String
+                                .format("Item: '%s' has insufficient stock for quantity: '%s'",
+                                        oi.getItem().getName(), oi.getQuantity()));
+                    }
+                    itemEntity.setUnitQuantity(itemEntity.getUnitQuantity() - oi.getQuantity());
+                    validateAvailability(itemEntity);
+                    itemService.updateItem(itemEntity);
+                });
 
         User deliveryEmployee = userService.findActiveUserById(request.getDeliveryEmployee());
         User customer = userService.findActiveUserById(request.getCustomer());
@@ -180,6 +185,7 @@ public class OrderService implements OrderUseCase {
     }
 
     @Override
+    @Transactional
     public OrderStatus cancel(String orderId) {
         Order order = fetchOrder(orderId);
         List<EmailRecipientDto> recipients = emailDispatchUtils.mapOrgAdminsToEmailRecipient();
@@ -188,13 +194,15 @@ public class OrderService implements OrderUseCase {
             User deliveryEmployee = userService.findActiveUserById(orderId);
             deliveryEmployee.setDriveAvailable(true);
 
-            for(OrderItem orderItem: order.getItems()) {
-                Item inventoryItem = itemService
-                        .getItemDetails(orderItem.getItem().getId().toString());
-                inventoryItem.setUnitQuantity(inventoryItem.getUnitQuantity() + orderItem.getQuantity());
-                validateAvailability(inventoryItem);
-                itemService.updateItem(inventoryItem);
-            }
+            order.getItems().stream()
+                    .sorted(Comparator.comparing(oi -> oi.getItem().getId()))
+                    .forEach(oi -> {
+                        Item inventoryItem = itemService
+                                .getItemDetailsForUpdate(oi.getItem().getId().toString());
+                        inventoryItem.setUnitQuantity(inventoryItem.getUnitQuantity() + oi.getQuantity());
+                        validateAvailability(inventoryItem);
+                        itemService.updateItem(inventoryItem);
+                    });
 
             emailDispatchUtils.mapSingleRecipient(deliveryEmployee).ifPresent(recipients::add);
         }

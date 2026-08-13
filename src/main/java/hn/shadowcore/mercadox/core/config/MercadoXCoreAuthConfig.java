@@ -2,7 +2,7 @@ package hn.shadowcore.mercadox.core.config;
 
 import hn.shadowcore.mercadox.context.filter.JwtAuthFilter;
 import hn.shadowcore.mercadox.context.filter.TenantValidatorFilter;
-import hn.shadowcore.mercadox.context.utils.JwtUtil;
+import hn.shadowcore.mercadox.context.security.JwtVerifier;
 import hn.shadowcore.mercadox.context.validator.AnonymousTenantValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -21,7 +21,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class MercadoXCoreAuthConfig {
 
-    private final JwtUtil jwtUtil;
+    private final JwtVerifier jwtVerifier;
 
     private final AnonymousTenantValidator tenantValidatorFilter;
 
@@ -34,8 +34,8 @@ public class MercadoXCoreAuthConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/v1/public/**").permitAll()
                         .anyRequest().authenticated())
-                .addFilterBefore(new JwtAuthFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(new TenantValidatorFilter(jwtUtil, tenantValidatorFilter), JwtAuthFilter.class)
+                .addFilterBefore(new JwtAuthFilter(jwtVerifier), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new TenantValidatorFilter(jwtVerifier, tenantValidatorFilter), JwtAuthFilter.class)
                 .build();
 
     }
