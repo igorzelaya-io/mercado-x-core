@@ -21,7 +21,7 @@ spring:
           non_contextual_creation: true
 security:
   jwt:
-    public-key-location: classpath:keys/public.pem
+    public-key-location: ${JWT_PUBLIC_KEY_LOCATION:file:./secrets/public.pem}
 
 logging:
   level:

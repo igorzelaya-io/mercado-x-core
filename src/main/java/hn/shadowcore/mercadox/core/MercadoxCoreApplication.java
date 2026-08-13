@@ -1,4 +1,4 @@
-package hn.shadowcore.mercadox;
+package hn.shadowcore.mercadox.core;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -7,7 +7,10 @@ import org.springframework.scheduling.annotation.EnableAsync;
 
 @EnableAsync
 @EnableCaching
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {
+        "hn.shadowcore.mercadox.core",
+        "hn.shadowcore.mercadox.library"
+})
 public class MercadoxCoreApplication {
 
     public static void main(String[] args) {

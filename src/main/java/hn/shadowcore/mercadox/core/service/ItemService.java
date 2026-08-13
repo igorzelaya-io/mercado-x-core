@@ -13,6 +13,7 @@ import hn.shadowcore.mercadox.library.jpa.repository.OrganizationRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.common.errors.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
@@ -74,6 +75,13 @@ public class ItemService implements ItemUseCase {
         return itemRepository.findById(UUID.fromString(s))
                 .orElseThrow(() -> new ResourceNotFoundException(String
                         .format("Item was not found for id: '%s'", s)));
+    }
+
+    @Transactional
+    public Item getItemDetailsForUpdate(String id) {
+        return itemRepository.findByIdForUpdate(UUID.fromString(id))
+                .orElseThrow(() -> new ResourceNotFoundException(String
+                        .format("Item was not found for id: '%s'", id)));
     }
 
     @Override
