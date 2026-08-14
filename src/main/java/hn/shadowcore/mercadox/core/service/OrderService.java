@@ -27,6 +27,7 @@ import hn.shadowcore.mercadox.library.jpa.repository.OrderItemRepository;
 import hn.shadowcore.mercadox.library.jpa.repository.OrderRepository;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.errors.ResourceNotFoundException;
+import hn.shadowcore.mercadox.context.utils.annotations.IdempotentOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -76,6 +77,7 @@ public class OrderService implements OrderUseCase {
     }
 
     @Override
+    @IdempotentOperation(ttlMinutes = 15, keyPrefix = "order:place:")
     public OrderStatus place(PlaceOrderRequest request) {
 
         if(isValidRequest(request.getCartDto())) {
@@ -96,7 +98,7 @@ public class OrderService implements OrderUseCase {
                     .id(Order.generateId()).orderStatus(OrderStatus.UNDER_REVIEW)
                     .user(user).shipment(shipment).organization(organization)
                     .createdAt(Timestamp.valueOf(LocalDateTime.now()))
-                    .build();
+                    .build(); // UNDER_REVIEW is the initial state — no transition needed
 
             List<OrderItem> orderItems = orderUtils.buildOrderItems(request.getCartDto().cartItems(), order);
 
@@ -147,7 +149,7 @@ public class OrderService implements OrderUseCase {
         User customer = userService.findActiveUserById(request.getCustomer());
         order.setDispatchedBy(deliveryEmployee.getFullName());
         order.setDeliveryId(deliveryEmployee.getId().toString());
-        order.setOrderStatus(OrderStatus.IN_PROGRESS);
+        order.setOrderStatus(order.getOrderStatus().transitionTo(OrderStatus.IN_PROGRESS));
         orderRepository.save(order);
 
         OrderDto orderDto = orderMapper.toDto(order);
@@ -172,7 +174,7 @@ public class OrderService implements OrderUseCase {
     @Override
     public OrderStatus close(String orderId) {
         Order order = fetchOrder(orderId);
-        order.setOrderStatus(OrderStatus.CLOSED);
+        order.setOrderStatus(order.getOrderStatus().transitionTo(OrderStatus.CLOSED));
 
         User delivery = userService.findActiveUserById(order.getDeliveryId());
         delivery.setDriveAvailable(true);
@@ -206,7 +208,7 @@ public class OrderService implements OrderUseCase {
 
             emailDispatchUtils.mapSingleRecipient(deliveryEmployee).ifPresent(recipients::add);
         }
-        order.setOrderStatus(OrderStatus.CLOSED);
+        order.setOrderStatus(order.getOrderStatus().transitionTo(OrderStatus.CANCELLED));
         orderRepository.save(order);
 
         User customer = userService.findActiveUserById(order.getUser().getId().toString());
@@ -232,7 +234,7 @@ public class OrderService implements OrderUseCase {
 
     private boolean isValidRequest(CartDto cartDto) {
         for(ItemDto item : cartDto.cartItems()) {
-            if(isInStock(item.getId(), item.getUnitQuantity())) {
+            if(!isInStock(item.getId(), item.getUnitQuantity())) {
                 throw new IllegalArgumentException(String
                         .format("There isn't enough units for: '%s'", item.getName()));
             }
