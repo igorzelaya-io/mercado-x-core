@@ -2,10 +2,10 @@ package hn.shadowcore.mercadox.core.util;
 
 
 import hn.shadowcore.mercadox.core.service.UserService;
+import hn.shadowcore.mercadox.library.entity.avro.EmailRecipient;
 import hn.shadowcore.mercadox.library.entity.model.auth.User;
 import hn.shadowcore.mercadox.library.entity.model.auth.UserNotificationPreference;
 import hn.shadowcore.mercadox.library.entity.model.enums.TemplateChannel;
-import hn.shadowcore.mercadox.library.entity.response.dto.EmailRecipientDto;
 import hn.shadowcore.mercadox.library.jpa.repository.UserNotificationPreferenceRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.producer.ProducerRecord;
@@ -33,7 +33,7 @@ public class EmailDispatchUtils {
         return kafkaTemplate.send(producerRecord);
     }
 
-    public List<EmailRecipientDto> mapOrgAdminsToEmailRecipient() {
+    public List<EmailRecipient> mapOrgAdminsToEmailRecipient() {
         return userService.findAllEnabledOrgAdmins()
                 .stream()
                 .filter(this::isEmailEnabled)
@@ -41,15 +41,18 @@ public class EmailDispatchUtils {
                 .collect(Collectors.toList());
     }
 
-    public Optional<EmailRecipientDto> mapSingleRecipient(User user) {
+    public Optional<EmailRecipient> mapSingleRecipient(User user) {
         if (!isEmailEnabled(user)) {
             return Optional.empty();
         }
         return Optional.of(toRecipient(user));
     }
 
-    private EmailRecipientDto toRecipient(User user) {
-        return new EmailRecipientDto(user.getFirstName(), user.getEmail());
+    private EmailRecipient toRecipient(User user) {
+        return EmailRecipient.newBuilder()
+                .setName(user.getFirstName())
+                .setEmail(user.getEmail())
+                .build();
     }
 
     private boolean isEmailEnabled(User user) {

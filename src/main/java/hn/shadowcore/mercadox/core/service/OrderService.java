@@ -18,11 +18,11 @@ import hn.shadowcore.mercadox.library.entity.model.enums.kafka.KafkaTopic;
 import hn.shadowcore.mercadox.library.entity.ports.incoming.OrderUseCase;
 import hn.shadowcore.mercadox.library.entity.request.DispatchOrderRequest;
 import hn.shadowcore.mercadox.library.entity.request.PlaceOrderRequest;
+import hn.shadowcore.mercadox.library.entity.avro.EmailRecipient;
+import hn.shadowcore.mercadox.library.entity.avro.OrderEmailEvent;
+import hn.shadowcore.mercadox.library.entity.avro.OrderPayload;
 import hn.shadowcore.mercadox.library.entity.response.dto.CartDto;
-import hn.shadowcore.mercadox.library.entity.response.dto.EmailEventDto;
-import hn.shadowcore.mercadox.library.entity.response.dto.EmailRecipientDto;
 import hn.shadowcore.mercadox.library.entity.response.dto.ItemDto;
-import hn.shadowcore.mercadox.library.entity.response.dto.OrderDto;
 import hn.shadowcore.mercadox.library.jpa.repository.OrderItemRepository;
 import hn.shadowcore.mercadox.library.jpa.repository.OrderRepository;
 import org.apache.kafka.clients.producer.ProducerRecord;
@@ -105,13 +105,13 @@ public class OrderService implements OrderUseCase {
             orderRepository.save(order);
             orderItemRepository.saveAll(orderItems);
 
-            List<EmailRecipientDto> recipientDtos = emailDispatchUtils.mapOrgAdminsToEmailRecipient();
-            OrderDto orderDto = orderMapper.toDto(order);
+            List<EmailRecipient> recipientDtos = emailDispatchUtils.mapOrgAdminsToEmailRecipient();
+            OrderPayload orderDto = orderMapper.toDto(order);
             orderDto.setFriendlyUrl("http://");
             orderDto.setSearchUrl("http://");
 
-            EmailEventDto<OrderDto> event = orderUtils.buildOrderEventDto(orderDto, "Order requested.",
-                    NotificationTemplateName.ORDER_REQUEST_TEMPLATE,recipientDtos);
+            OrderEmailEvent event = orderUtils.buildOrderEventDto(orderDto, "Order requested.",
+                    NotificationTemplateName.ORDER_REQUEST_TEMPLATE, recipientDtos);
 
             ProducerRecord<String, Object> producerRecord = KafkaProducerRecordFactory
                     .buildWithOrgIdHeader(KafkaTopic.ORDER_PLACING, orderDto.getId(), event);
@@ -152,16 +152,16 @@ public class OrderService implements OrderUseCase {
         order.setOrderStatus(order.getOrderStatus().transitionTo(OrderStatus.IN_PROGRESS));
         orderRepository.save(order);
 
-        OrderDto orderDto = orderMapper.toDto(order);
+        OrderPayload orderDto = orderMapper.toDto(order);
 
-        List<EmailRecipientDto> recipients = emailDispatchUtils.mapOrgAdminsToEmailRecipient();
+        List<EmailRecipient> recipients = emailDispatchUtils.mapOrgAdminsToEmailRecipient();
         emailDispatchUtils.mapSingleRecipient(deliveryEmployee).ifPresent(recipients::add);
         emailDispatchUtils.mapSingleRecipient(customer).ifPresent(recipients::add);
 
         deliveryEmployee.setDriveAvailable(false);
         userService.saveUser(deliveryEmployee);
 
-        EmailEventDto<OrderDto> emailDto = orderUtils.buildOrderEventDto(orderDto, "Order Confirmed.",
+        OrderEmailEvent emailDto = orderUtils.buildOrderEventDto(orderDto, "Order Confirmed.",
                 NotificationTemplateName.ORDER_CONFIRMATION_TEMPLATE, recipients);
 
         ProducerRecord<String, Object> producerRecord = KafkaProducerRecordFactory
@@ -190,7 +190,7 @@ public class OrderService implements OrderUseCase {
     @Transactional
     public OrderStatus cancel(String orderId) {
         Order order = fetchOrder(orderId);
-        List<EmailRecipientDto> recipients = emailDispatchUtils.mapOrgAdminsToEmailRecipient();
+        List<EmailRecipient> recipients = emailDispatchUtils.mapOrgAdminsToEmailRecipient();
 
         if(OrderStatus.IN_PROGRESS.equals(order.getOrderStatus())) {
             User deliveryEmployee = userService.findActiveUserById(orderId);
@@ -215,9 +215,9 @@ public class OrderService implements OrderUseCase {
 
         emailDispatchUtils.mapSingleRecipient(customer).ifPresent(recipients::add);
 
-        EmailEventDto<OrderDto> eventDto = orderUtils.buildOrderEventDto
-                (orderMapper.toDto(order), "Order Cancelled.",
-                        NotificationTemplateName.ORDER_CANCELLATION_TEMPLATE, recipients);
+        OrderEmailEvent eventDto = orderUtils.buildOrderEventDto(
+                orderMapper.toDto(order), "Order Cancelled.",
+                NotificationTemplateName.ORDER_CANCELLATION_TEMPLATE, recipients);
 
         ProducerRecord<String, Object> producerRecord = KafkaProducerRecordFactory
                 .buildWithOrgIdHeader(KafkaTopic.ORDER_CANCELLED, order.getId(), eventDto);

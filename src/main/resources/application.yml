@@ -19,6 +19,16 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         lob:
           non_contextual_creation: true
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    consumer:
+      group-id: core-service-group
+    listener:
+      missing-topics-fatal: false
+
+kafka:
+  schema-registry-url: ${SCHEMA_REGISTRY_URL:http://localhost:8085}
+
 security:
   jwt:
     public-key-location: ${JWT_PUBLIC_KEY_LOCATION:file:./secrets/public.pem}
