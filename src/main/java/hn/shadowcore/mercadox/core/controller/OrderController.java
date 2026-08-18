@@ -1,6 +1,7 @@
 package hn.shadowcore.mercadox.core.controller;
 
 import hn.shadowcore.mercadox.core.mapper.OrderMapper;
+import hn.shadowcore.mercadox.library.entity.avro.OrderPayload;
 import hn.shadowcore.mercadox.library.entity.model.enums.OrderStatus;
 import hn.shadowcore.mercadox.library.entity.ports.incoming.OrderQueryUseCase;
 import hn.shadowcore.mercadox.library.entity.ports.incoming.OrderUseCase;
@@ -8,7 +9,6 @@ import hn.shadowcore.mercadox.library.entity.request.DispatchOrderRequest;
 import hn.shadowcore.mercadox.library.entity.request.PlaceOrderRequest;
 import hn.shadowcore.mercadox.library.entity.response.BaseResponseDto;
 import hn.shadowcore.mercadox.library.entity.response.Response;
-import hn.shadowcore.mercadox.library.entity.response.dto.OrderDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,9 +35,9 @@ public class OrderController {
     private final OrderMapper orderMapper;
 
     @GetMapping("/{orderId}")
-    public ResponseEntity<? extends Response<OrderDto>> getOrderById(@PathVariable("orderId") String orderId) {
-        BaseResponseDto<OrderDto> response = new BaseResponseDto<>();
-        OrderDto orderDto = orderMapper.toDto(orderQueryUseCase.findOrderById(orderId));
+    public ResponseEntity<? extends Response<OrderPayload>> getOrderById(@PathVariable("orderId") String orderId) {
+        BaseResponseDto<OrderPayload> response = new BaseResponseDto<>();
+        OrderPayload orderDto = orderMapper.toDto(orderQueryUseCase.findOrderById(orderId));
         return response.buildResponseEntity(HttpStatus.OK, "Order returned successfully", orderDto);
     }
 

@@ -4,7 +4,7 @@ import hn.shadowcore.mercadox.core.mapper.LeadMapper;
 import hn.shadowcore.mercadox.core.publisher.KafkaLeadEventPublisher;
 import hn.shadowcore.mercadox.library.entity.model.auth.Organization;
 import hn.shadowcore.mercadox.library.entity.model.core.Lead;
-import hn.shadowcore.mercadox.library.entity.model.enums.kafka.event.LeadCreatedEvent;
+import hn.shadowcore.mercadox.library.entity.avro.LeadCreatedEvent;
 import hn.shadowcore.mercadox.library.entity.ports.incoming.ClientLeadUseCase;
 import hn.shadowcore.mercadox.library.entity.request.ClientLeadRequest;
 import hn.shadowcore.mercadox.library.jpa.repository.LeadRepository;
