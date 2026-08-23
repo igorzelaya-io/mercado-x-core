@@ -23,7 +23,7 @@ public class MercadoXCoreAuthConfig {
 
     private final JwtVerifier jwtVerifier;
 
-    private final AnonymousTenantValidator tenantValidatorFilter;
+    private final AnonymousTenantValidator anonymousTenantValidator;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -35,7 +35,7 @@ public class MercadoXCoreAuthConfig {
                         .requestMatchers("/api/v1/public/**").permitAll()
                         .anyRequest().authenticated())
                 .addFilterBefore(new JwtAuthFilter(jwtVerifier), UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(new TenantValidatorFilter(jwtVerifier, tenantValidatorFilter), JwtAuthFilter.class)
+                .addFilterAfter(new TenantValidatorFilter(anonymousTenantValidator), JwtAuthFilter.class)
                 .build();
 
     }

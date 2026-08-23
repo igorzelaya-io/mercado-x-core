@@ -14,7 +14,7 @@ import hn.shadowcore.mercadox.library.entity.model.core.OrderItem;
 import hn.shadowcore.mercadox.library.entity.model.core.Shipment;
 import hn.shadowcore.mercadox.library.entity.model.enums.NotificationTemplateName;
 import hn.shadowcore.mercadox.library.entity.model.enums.OrderStatus;
-import hn.shadowcore.mercadox.library.entity.model.enums.kafka.KafkaTopic;
+import hn.shadowcore.mercadox.library.entity.kafka.KafkaTopic;
 import hn.shadowcore.mercadox.library.entity.ports.incoming.OrderUseCase;
 import hn.shadowcore.mercadox.library.entity.request.DispatchOrderRequest;
 import hn.shadowcore.mercadox.library.entity.request.PlaceOrderRequest;
