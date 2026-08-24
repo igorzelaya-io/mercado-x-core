@@ -8,7 +8,6 @@ import hn.shadowcore.mercadox.library.entity.model.core.Item;
 import hn.shadowcore.mercadox.library.entity.model.core.Order;
 import hn.shadowcore.mercadox.library.entity.model.core.OrderItem;
 import hn.shadowcore.mercadox.library.entity.model.core.OrderItemsKey;
-import hn.shadowcore.mercadox.library.entity.model.enums.NotificationTemplateName;
 import hn.shadowcore.mercadox.library.entity.response.dto.ItemDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -25,13 +24,13 @@ public class OrderUtils {
     private final ItemService itemService;
 
     public OrderEmailEvent buildOrderEventDto(OrderPayload order, String eventSubject,
-                                              NotificationTemplateName emailTemplate,
+                                              String emailTemplate,
                                               List<EmailRecipient> recipients) {
         return OrderEmailEvent.newBuilder()
                 .setEventId(order.getId())
                 .setEventSubject(eventSubject)
                 .setEmailTemplate(hn.shadowcore.mercadox.library.entity.avro.NotificationTemplateName
-                        .valueOf(emailTemplate.name()))
+                        .valueOf(emailTemplate))
                 .setRecipients(recipients)
                 .setPayload(order)
                 .setTimestamp(Instant.now())

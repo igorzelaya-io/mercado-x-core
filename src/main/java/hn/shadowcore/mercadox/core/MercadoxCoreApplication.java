@@ -9,7 +9,8 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @EnableCaching
 @SpringBootApplication(scanBasePackages = {
         "hn.shadowcore.mercadox.core",
-        "hn.shadowcore.mercadox.library"
+        "hn.shadowcore.mercadox.library",
+        "hn.shadowcore.mercadox.context"
 })
 public class MercadoxCoreApplication {
 

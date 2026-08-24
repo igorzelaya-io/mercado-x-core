@@ -12,7 +12,6 @@ import hn.shadowcore.mercadox.library.entity.model.core.Location;
 import hn.shadowcore.mercadox.library.entity.model.core.Order;
 import hn.shadowcore.mercadox.library.entity.model.core.OrderItem;
 import hn.shadowcore.mercadox.library.entity.model.core.Shipment;
-import hn.shadowcore.mercadox.library.entity.model.enums.NotificationTemplateName;
 import hn.shadowcore.mercadox.library.entity.model.enums.OrderStatus;
 import hn.shadowcore.mercadox.library.entity.kafka.KafkaTopic;
 import hn.shadowcore.mercadox.library.entity.ports.incoming.OrderUseCase;
@@ -111,7 +110,7 @@ public class OrderService implements OrderUseCase {
             orderDto.setSearchUrl("http://");
 
             OrderEmailEvent event = orderUtils.buildOrderEventDto(orderDto, "Order requested.",
-                    NotificationTemplateName.ORDER_REQUEST_TEMPLATE, recipientDtos);
+                    "ORDER_REQUEST_TEMPLATE", recipientDtos);
 
             ProducerRecord<String, Object> producerRecord = KafkaProducerRecordFactory
                     .buildWithOrgIdHeader(KafkaTopic.ORDER_PLACING, orderDto.getId(), event);
@@ -162,7 +161,7 @@ public class OrderService implements OrderUseCase {
         userService.saveUser(deliveryEmployee);
 
         OrderEmailEvent emailDto = orderUtils.buildOrderEventDto(orderDto, "Order Confirmed.",
-                NotificationTemplateName.ORDER_CONFIRMATION_TEMPLATE, recipients);
+                "ORDER_CONFIRMATION_TEMPLATE", recipients);
 
         ProducerRecord<String, Object> producerRecord = KafkaProducerRecordFactory
                 .buildWithOrgIdHeader(KafkaTopic.ORDER_CONFIRMED, orderDto.getId(), emailDto);
@@ -217,7 +216,7 @@ public class OrderService implements OrderUseCase {
 
         OrderEmailEvent eventDto = orderUtils.buildOrderEventDto(
                 orderMapper.toDto(order), "Order Cancelled.",
-                NotificationTemplateName.ORDER_CANCELLATION_TEMPLATE, recipients);
+                "ORDER_CANCELLATION_TEMPLATE", recipients);
 
         ProducerRecord<String, Object> producerRecord = KafkaProducerRecordFactory
                 .buildWithOrgIdHeader(KafkaTopic.ORDER_CANCELLED, order.getId(), eventDto);
