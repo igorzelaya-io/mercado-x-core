@@ -40,6 +40,16 @@ security:
   jwt:
     public-key-location: ${JWT_PUBLIC_KEY_LOCATION:file:./secrets/public.pem}
 
+leads:
+  ratelimit:
+    max-body-bytes: 8192
+    ip:
+      max-requests: 5
+      window-seconds: 60
+    org:
+      max-requests: 20
+      window-seconds: 60
+
 logging:
   level:
     org.hibernate: DEBUG

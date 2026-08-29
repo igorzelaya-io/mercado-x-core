@@ -29,6 +29,6 @@ public class LeadController {
         clientLeadUseCase.generateLead(request, orgId);
         return response
                 .buildResponseEntity(HttpStatus.CREATED,
-                        "Lead created successfully.", "Lead created successfully.");
+                        "Lead = successfully.", "Lead created successfully.");
     }
 }

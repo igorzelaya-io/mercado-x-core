@@ -102,5 +102,17 @@ class LeadServiceTest {
         verifyNoInteractions(leadEventPublisher);
     }
 
+    @Test
+    void shouldSilentlyDropSubmissionWhenHoneypotFilled() {
+
+        String orgId = UUID.randomUUID().toString();
+        ClientLeadRequest request = ClientLeadRequestMother.withHoneypotFilled();
+
+        leadService.generateLead(request, orgId);
+
+        verifyNoInteractions(organizationRepository);
+        verifyNoInteractions(leadRepository);
+        verifyNoInteractions(leadEventPublisher);
+    }
 
 }
