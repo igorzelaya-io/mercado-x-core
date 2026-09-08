@@ -5,7 +5,7 @@
     <parent>
         <groupId>hn.shadowcore</groupId>
         <artifactId>mercado-x-parent</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>1.0.0</version>
     </parent>
     <artifactId>mercado-x-core</artifactId>
     <name>mercado-x-core</name>
@@ -40,18 +40,23 @@
         <dependency>
             <groupId>hn.shadowcore</groupId>
             <artifactId>mercado-x-library-jpa</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>1.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>hn.shadowcore</groupId>
+            <artifactId>mercado-x-library-entity</artifactId>
+            <version>1.0.0</version>
         </dependency>
         <dependency>
             <groupId>hn.shadowcore</groupId>
             <artifactId>mercado-x-oauth</artifactId>
-            <version>1.0.1-SNAPSHOT</version>
+            <version>1.0.2</version>
         </dependency>
 
         <dependency>
             <groupId>hn.shadowcore</groupId>
             <artifactId>mercado-x-redis</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>1.0.0</version>
         </dependency>
 
         <dependency>
@@ -62,7 +67,7 @@
         <dependency>
             <groupId>hn.shadowcore</groupId>
             <artifactId>mercado-x-context</artifactId>
-            <version>1.0.1-SNAPSHOT</version>
+            <version>1.0.0</version>
         </dependency>
 
         <dependency>
