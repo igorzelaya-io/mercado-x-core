@@ -40,6 +40,10 @@ security:
   jwt:
     public-key-location: ${JWT_PUBLIC_KEY_LOCATION:file:./secrets/public.pem}
 
+encryption:
+  master-key:
+    value: ${ENCRYPTION_MASTER_KEY}
+
 leads:
   ratelimit:
     max-body-bytes: 8192

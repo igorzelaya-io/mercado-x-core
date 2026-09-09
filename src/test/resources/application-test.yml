@@ -5,3 +5,7 @@ spring:
       - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
   flyway:
     enabled: false
+
+encryption:
+  master-key:
+    value: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=   # test-only fixture key, not a real secret
