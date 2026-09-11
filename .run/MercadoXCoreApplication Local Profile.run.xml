@@ -5,7 +5,7 @@
     <selectedOptions>
       <option name="environmentVariables" />
     </selectedOptions>
-    <option name="SPRING_BOOT_MAIN_CLASS" value="hn.shadowcore.mercadox.core.MercadoxCoreApplication" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="hn.alturaforge.mercadox.core.MercadoxCoreApplication" />
     <method v="2">
       <option name="Make" enabled="true" />
     </method>

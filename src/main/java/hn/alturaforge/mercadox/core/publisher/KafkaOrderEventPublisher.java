@@ -1,0 +1,33 @@
+package hn.alturaforge.mercadox.core.publisher;
+
+import hn.alturaforge.mercadox.core.util.EmailDispatchUtils;
+import hn.alturaforge.mercadox.library.entity.kafka.KafkaTopic;
+import hn.alturaforge.mercadox.library.entity.kafka.publisher.EmailEventPublisher;
+import hn.alturaforge.mercadox.library.entity.avro.OrderEmailEvent;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
+
+@Component
+@RequiredArgsConstructor
+public class KafkaOrderEventPublisher implements EmailEventPublisher {
+
+    private final EmailDispatchUtils emailDispatchUtils;
+    private static final String TOPIC_ORDER_PLACED = KafkaTopic.ORDER_PLACING;
+    private static final String TOPIC_ORDER_DISPATCHED = KafkaTopic.ORDER_CONFIRMED;
+    private static final String TOPIC_ORDER_CANCELLED = KafkaTopic.ORDER_CANCELLED;
+
+    @Override
+    public void publishOrderPlaced(OrderEmailEvent event) {
+
+    }
+
+    @Override
+    public void publishOrderDispatch(OrderEmailEvent event) {
+
+    }
+
+    @Override
+    public void publishOrderCancelled(OrderEmailEvent event) {
+
+    }
+}

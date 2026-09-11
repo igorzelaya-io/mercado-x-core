@@ -13,7 +13,7 @@ It does not authenticate users or send notifications itself; it delegates those 
 - Java 17
 - Maven 3.8+
 - Docker and Docker Compose
-- Access to the GitHub Packages registry for `hn.shadowcore` internal libraries
+- Access to the GitHub Packages registry for `hn.alturaforge` internal libraries
 
 ---
 
